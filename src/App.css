@@ -9,5 +9,10 @@ body {
   width: 30px;
   margin-right: 10px;
 }
-
+img {
+  width: 25vw;
+}
+li.homeCard {
+  background-color: #108b10;
+}
 /* Add your own custom styles here */
