@@ -1,10 +1,13 @@
 /* Imports */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { reserveBook, returnBook } from "./ApiPort";
+import { useAuth } from "./Authorization";
 /* Defenitions */
 const API = "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api";
 /* First Function */
 export default function BookSpecs() {
+  const { token } = useAuth();
   const { id } = useParams();
   const [book, setBook] = useState(null);
   useEffect(() => {
@@ -29,6 +32,12 @@ export default function BookSpecs() {
         <p>{book.author}</p>
         <p>{book.description}</p>
         <p>{book.available}</p>
+        {book.available && (
+          <button onClick={() => reserveBook(token, book.id)}>Reserve</button>
+        )}
+        {book.available === false && (
+          <button onClick={() => returnBook(token, id)}>Return</button>
+        )}
       </div>
     </>
   );

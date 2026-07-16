@@ -24,7 +24,74 @@ export async function getBooks() {
   }
   console.log(result);
 }
+export async function getBook() {
+  try {
+    const response = await fetch(API + "/books/");
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+  console.log(result);
+}
+export async function getReservations(token) {
+  if (!token) {
+    throw Error("You must be signed in to see reservations.");
+  }
 
+  try {
+    const response = await fetch(API + "/reservations", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+export async function reserveBook(token, id) {
+  if (!token) {
+    throw Error("You must be signed in to make a reservation.");
+  }
+  const response = await fetch(API + "/reservations", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify(id),
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw Error(result.message);
+  }
+  return await response.json();
+}
+/* ensure you can't delete other peoples reservations */
+export async function returnBook(token, id) {
+  if (!token) {
+    throw Error("You must be signed in to delete a reservation.");
+  }
+  const response = await fetch(API + "/reservations/" + { id }, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw Error(result.message);
+  }
+  if (response.status === 204) return { success: true };
+  return await response.json();
+}
+/* Keep for future testing. May be needed. */
 /* export async function getBookBetter() {
   try {
     const response = await fetch(API + "/books");

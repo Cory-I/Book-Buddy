@@ -1,12 +1,13 @@
 /* Imports */
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import { getBooks } from "./ApiPort";
+import { getBooks, reserveBook } from "./ApiPort";
+import { useAuth } from "./Authorization";
 /* Defenitions */
 /* First Function */
 export default function Home() {
+  const { token } = useAuth();
   const [books, SetBooks] = useState([]);
-  console.log(books);
   useEffect(() => {
     async function makeBooks() {
       const data = await getBooks();
@@ -34,9 +35,16 @@ export default function Home() {
               </Link>
               — <h5>{book.author}</h5> <img src={book.coverimage} />
               <p>{book.description}</p>
+              {book.available && (
+                <button onClick={() => reserveBook(token, book.id)}>
+                  Reserve
+                </button>
+              )}
+              {book.available === false && (
+                <button onClick={() => returnBook(token, id)}>Return</button>
+              )}
             </li>
           ))}
-          <button>+</button> <button>-</button>
         </ul>
       </div>
     </>
