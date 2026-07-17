@@ -5,7 +5,6 @@ import RegisterUser from "./Registration";
 import LoginUser from "./Login";
 import Profile from "./Profile";
 import Home from "./Home";
-import Reservations from "./Reservations";
 import BookSpecs from "./BookSpecs";
 function App() {
   return (
