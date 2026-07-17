@@ -35,6 +35,25 @@ export async function getBook() {
   }
   console.log(result);
 }
+export async function getProfile(token) {
+  if (!token) {
+    throw Error("Sign in to let us know who you are.");
+  }
+  try {
+    const response = await fetch(API + "/users/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+
+    console.log(result);
+    return result;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
 export async function getReservations(token) {
   if (!token) {
     throw Error("You must be signed in to see reservations.");
@@ -47,6 +66,8 @@ export async function getReservations(token) {
       },
     });
     const result = await response.json();
+
+    console.log(result);
     return result;
   } catch (e) {
     console.error(e);
@@ -54,6 +75,8 @@ export async function getReservations(token) {
   }
 }
 export async function reserveBook(token, id) {
+  console.log(token);
+  console.log(id);
   if (!token) {
     throw Error("You must be signed in to make a reservation.");
   }
@@ -63,7 +86,7 @@ export async function reserveBook(token, id) {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify({ bookId: id }),
   });
 
   if (!response.ok) {
@@ -73,11 +96,14 @@ export async function reserveBook(token, id) {
   return await response.json();
 }
 /* ensure you can't delete other peoples reservations */
+/* maybe make it so that it appears on reservations page after reserving and only let button appear on rez page? */
 export async function returnBook(token, id) {
+  console.log(token);
+  console.log(id);
   if (!token) {
     throw Error("You must be signed in to delete a reservation.");
   }
-  const response = await fetch(API + "/reservations/" + { id }, {
+  const response = await fetch(API + "/reservations/" + id, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + token,

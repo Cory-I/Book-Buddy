@@ -8,22 +8,110 @@ export default function Navbar() {
   const { token, logout } = useAuth();
   return (
     <header>
-      <h1>
+      <h1
+        style={{
+          backgroundColor: "#096209",
+          padding: "1rem",
+          marginBottom: "1rem",
+          marginTop: "0rem",
+          paddingTop: "1rem",
+          fontFamily: "Courier, sans-serif",
+        }}
+      >
         <img id="logo-image" src="books.png" />
         Library App
       </h1>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/profile">Profile</NavLink>
-        <NavLink to="/reservations">Reservations</NavLink>
+      <nav className="navbar">
+        <NavLink
+          className="nav-links"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            backgroundColor: "#096209",
+            padding: ".5rem",
+            margin: ".5rem",
+            marginTop: "1rem",
+            padding: "1rem",
+            padding: "1rem",
+            fontFamily: "Courier, sans-serif",
+          }}
+          to="/"
+        >
+          Home
+        </NavLink>
         {token ? (
-          <a href="" onClick={() => logout()}>
-            Log out
-          </a>
+          <>
+            <a
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                backgroundColor: "#096209",
+                padding: ".5rem",
+                margin: ".5rem",
+                marginTop: "1rem",
+                padding: "1rem",
+                padding: "1rem",
+                fontFamily: "Courier, sans-serif",
+              }}
+              href=""
+              onClick={() => logout()}
+            >
+              Log out
+            </a>
+            <NavLink
+              className="nav-links"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                backgroundColor: "#096209",
+                padding: ".5rem",
+                margin: ".5rem",
+                marginTop: "1rem",
+                padding: "1rem",
+                padding: "1rem",
+                fontFamily: "Courier, sans-serif",
+              }}
+              to="/profile"
+            >
+              Profile
+            </NavLink>
+          </>
         ) : (
           <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/register">Register</NavLink>
+            <NavLink
+              className="nav-links"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                backgroundColor: "#096209",
+                padding: ".5rem",
+                margin: ".5rem",
+                marginTop: "1rem",
+                padding: "1rem",
+                padding: "1rem",
+                fontFamily: "Courier, sans-serif",
+              }}
+              to="/login"
+            >
+              Login
+            </NavLink>
+            <NavLink
+              className="nav-links"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+                backgroundColor: "#096209",
+                padding: ".5rem",
+                margin: ".5rem",
+                marginTop: "1rem",
+                padding: "1rem",
+                padding: "1rem",
+                fontFamily: "Courier, sans-serif",
+              }}
+              to="/register"
+            >
+              Register
+            </NavLink>
           </>
         )}
       </nav>

@@ -23,19 +23,53 @@ export default function LoginUser() {
   };
   return (
     <>
-      <h1>Welcome back. Login here to see your books!</h1>
-      <form action={LoginAttempt}>
-        <label>
-          Email
+      <p
+        style={{
+          backgroundColor: "#096209",
+          padding: "1rem",
+          margin: "1rem",
+          marginTop: "1rem",
+          fontFamily: "Courier, sans-serif",
+        }}
+      >
+        Welcome back. Login here to see your books!
+      </p>
+      <form
+        style={{
+          backgroundColor: "#096209",
+          padding: "1rem",
+          margin: "1rem",
+          marginTop: "1rem",
+          fontFamily: "Courier, sans-serif",
+        }}
+        action={LoginAttempt}
+      >
+        <label style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Email:
           <input type="text" name="email" required />
         </label>
-        <label>
-          Password
+        <br></br>
+        <label style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Password:
           <input type="text" name="password" required />
         </label>
-        <button>Login</button>
+        <br></br>
+        <button style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Login
+        </button>
+        <br></br>
         {error && <p role="alert">{error}</p>}
-        <Link to="/register">Not registered? click here to register.</Link>
+        <Link
+          style={{
+            textDecoration: "none",
+            margin: "1rem",
+            fontFamily: "Courier, sans-serif",
+            color: "inherit",
+          }}
+          to="/register"
+        >
+          Not registered? click here to register.
+        </Link>
       </form>
     </>
   );

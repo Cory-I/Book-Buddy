@@ -24,30 +24,62 @@ export default function RegisterUser() {
   };
   return (
     <>
-      <h2>
+      <p
+        style={{
+          backgroundColor: "#096209",
+          padding: "1rem",
+          margin: "1rem",
+          marginTop: "1rem",
+          fontFamily: "Courier, sans-serif",
+        }}
+      >
         Register here to make a profile and get acess to are whole catolouge of
         books!
-      </h2>
-      <form action={RegAttempt}>
-        <label>
-          First Name
+      </p>
+      <form
+        style={{
+          backgroundColor: "#096209",
+          padding: "1rem",
+          margin: "1rem",
+          marginTop: "1rem",
+          fontFamily: "Courier, sans-serif",
+        }}
+        action={RegAttempt}
+      >
+        <label style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          First Name:
           <input type="text" name="firstname" />
         </label>
-        <label>
-          Last Name
+        <br></br>
+        <label style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Last Name:
           <input type="text" name="lastname" />
         </label>
-        <label>
-          Email
+        <br></br>
+        <label style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Email:
           <input type="email" name="email" required />
         </label>
-        <label>
-          Password
+        <br></br>
+        <label style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Password:
           <input type="text" name="password" required />
         </label>
-        <button>Register</button>
+        <br></br>
+        <button style={{ margin: "1rem", fontFamily: "Courier, sans-serif" }}>
+          Register
+        </button>
         {error && <p role="alert">{error}</p>}
-        <Link to="/login">
+        <br></br>
+        <Link
+          style={{
+            textDecoration: "none",
+            margin: "1rem",
+            fontFamily: "Courier, sans-serif",
+            color: "inherit",
+          }}
+          to="/login"
+        >
           Already a part of the club? Click here to log in.
         </Link>
       </form>

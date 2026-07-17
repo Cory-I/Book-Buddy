@@ -17,7 +17,6 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Home />} />
           <Route path="/:id" element={<BookSpecs />} />
-          <Route path="/reservations" element={<Reservations />} />
         </Route>
       </Routes>
     </div>
