@@ -10,6 +10,7 @@ export default function BookSpecs() {
   const { token } = useAuth();
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function findBook() {
       try {
@@ -76,17 +77,20 @@ export default function BookSpecs() {
         {book.available && (
           <button
             onClick={async () => {
-              await reserveBook(token, book.id);
-
-              // re-fetch this book
-              const response = await fetch(API + `/books/${id}`);
-              const updated = await response.json();
-              setBook(updated);
+              try {
+                await reserveBook(token, book.id);
+                const response = await fetch(API + `/books/${id}`);
+                const updated = await response.json();
+                setBook(updated);
+              } catch (e) {
+                setError(e.message);
+              }
             }}
           >
             Reserve
           </button>
         )}
+        {error && <p role="alert">{error}</p>}
       </div>
     </>
   );

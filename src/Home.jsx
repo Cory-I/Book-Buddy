@@ -7,20 +7,25 @@ import { useAuth } from "./Authorization";
 /* First Function */
 export default function Home() {
   const { token } = useAuth();
-  const [books, SetBooks] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function makeBooks() {
       const data = await getBooks();
-      SetBooks(data);
+      setBooks(data);
     }
     makeBooks();
   }, []);
   const [reservations, setReservations] = useState([]);
   useEffect(() => {
     async function makeReservations() {
-      if (!token) return;
-      const data = await getReservations(token);
-      setReservations(data);
+      try {
+        if (!token) return;
+        const data = await getReservations(token);
+        setReservations(data);
+      } catch (e) {
+        setError(e.message);
+      }
     }
     makeReservations();
   }, [token]);
@@ -40,6 +45,7 @@ export default function Home() {
         Home Page
       </h2>
       <div>
+        {error && <p role="alert">{error}</p>}
         <ul
           style={{ listStyle: "none", marginLeft: "0rem", marginRight: "2rem" }}
         >
@@ -67,9 +73,13 @@ export default function Home() {
               {book.available && (
                 <button
                   onClick={async () => {
-                    await reserveBook(token, book.id);
-                    const updatedBooks = await getBooks();
-                    SetBooks(updatedBooks);
+                    try {
+                      await reserveBook(token, book.id);
+                      const updatedBooks = await getBooks();
+                      setBooks(updatedBooks);
+                    } catch (e) {
+                      setError(e.message);
+                    }
                   }}
                 >
                   Reserve

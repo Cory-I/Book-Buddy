@@ -8,6 +8,7 @@ import { useAuth } from "./Authorization.jsx";
 export default function Profile() {
   const { token } = useAuth();
   const [profile, setProfile] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     async function makeProfile() {
       if (!token) return;
@@ -20,8 +21,12 @@ export default function Profile() {
   useEffect(() => {
     async function makeReservations() {
       if (!token) return;
-      const data = await getReservations(token);
-      setReservations(data);
+      try {
+        const data = await getReservations(token);
+        setReservations(data);
+      } catch (e) {
+        setError(e.message);
+      }
     }
     makeReservations();
   }, [token]);
@@ -79,6 +84,7 @@ export default function Profile() {
             Your Current Reservations:{" "}
           </p>
         </div>
+        {error && <p role="alert">{error}</p>}
         <ul
           style={{
             backgroundColor: "#096209",
@@ -111,9 +117,13 @@ export default function Profile() {
               <p>{reservation.description}</p>
               <button
                 onClick={async () => {
-                  await returnBook(token, reservation.id);
-                  const updated = await getReservations(token);
-                  setReservations(updated);
+                  try {
+                    await returnBook(token, reservation.id);
+                    const updated = await getReservations(token);
+                    setReservations(updated);
+                  } catch (e) {
+                    setError(e.message);
+                  }
                 }}
               >
                 Return
